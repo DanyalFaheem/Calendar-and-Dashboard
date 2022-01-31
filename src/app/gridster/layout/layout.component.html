@@ -1,0 +1,125 @@
+<div class="container-fluid" style="margin-top: 2em;">
+  <div class="row">
+    <div class="col-3">
+      <h2 class="text-center">PROPERTIES</h2>
+      <hr>
+      <div *ngIf=propertiesClicked>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Grid Properties
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <form ngForm>
+              <label for="Rows" class="form-control">
+                Rows:
+                <br>
+                <input type="number" placeholder="rows" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="getLayout(currentItem)!.rows" (ngModelChange)="changedOptions()">
+              </label>
+              <br>
+              <label for="Columns" class="form-control">
+                Columns:
+                <br>
+                <input type="number" placeholder="cols" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="getLayout(currentItem)!.cols" (ngModelChange)="changedOptions()">
+              </label>
+            </form>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Component Properties
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="selected==='input'">
+              <label for="Placeholder" class="form-control">
+                Placeholder:
+                <br>
+                <input type="text" id="Placeholder" [ngModelOptions]="{standalone: true}" name="Placeholder"
+                  placeholder="placeholder" [(ngModel)]="getLayout(currentItem)!.obj.placeholder">
+              </label>
+              <div class="form-group options-header">
+                <label for="Input Type" class="form-control">Type:</label>
+                <select class="form-control" [(ngModel)]="getLayout(currentItem)!.obj.type"
+                  [ngModelOptions]="{standalone: true}" placeholder="Input type" id="Input Type">
+                  <option value="text">Text</option>
+                  <option value="number">Number</option>
+                  <option value="radio">Radio</option>
+                  <option value="email">Email</option>
+                  <option value="date">Date</option>
+                  <option value="currency">Currency</option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="selected==='checkbox'">
+              <br>
+              <button class="btn btn-info" (click)="addCheckbox()">
+                <strong>+
+                </strong>
+              </button>
+              <br>
+              <label *ngFor="let check of getLayout(currentItem)!.obj.checkboxes; let i = index" for="Input Type">
+                Checkbox {{i + 1}} value:
+                <br>
+                <input type="text" id="Input Type" [ngModelOptions]="{standalone: true}" name="Input Type"
+                  placeholder="value" [(ngModel)]="check.value">
+                <button class="btn btn-danger btn-sm" (click)="deleteCheckbox(i)">
+                  <strong>X
+                  </strong>
+                </button>
+              </label>
+            </div>
+            <div class="form-control" *ngIf="selected==='covid19'">
+              <ngx-select-dropdown (change)="selectionChanged($event)" [options]="countryNames" [config]="config1"
+                [(ngModel)]="getLayout(currentItem)!.obj.country"></ngx-select-dropdown>
+              <br>
+              <br>
+
+              <ngx-select-dropdown (change)="selectionChanged($event)" [options]="timeframe" [config]="config"
+                [(ngModel)]="getLayout(currentItem)!.obj.timeline"></ngx-select-dropdown>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <div class="col-6">
+      <gridster [options]="options">
+        <gridster-item *ngFor="let item of layout" [item]="item" (dragover)="setDropId(item.id)"
+          (click)="onClick(item.id)">
+          <ng-container appLayoutItem [(obj)]="item.obj" [componentRef]="getComponentRef(item.id)">
+          </ng-container>
+          <button id="del" class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">
+            X
+          </button>
+        </gridster-item>
+      </gridster>
+    </div>
+    <div class="col-3 text-center">
+      <div>
+        <h2 class="text-center">ITEMS</h2>
+        <hr>
+        <div class="draggable" draggable="true" (dragend)="addItem('input')">Input</div>
+        <!-- <div class="draggable" draggable="true" (dragend)="dropItem('input')">
+           Input
+        </div> -->
+        <br>
+        <div class="draggable" draggable="true" (dragend)="addItem('checkbox')">
+          Checkbox
+        </div>
+        <br>
+        <div class="draggable" draggable="true" (dragend)="addItem('covid19')">
+          Covid-19
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

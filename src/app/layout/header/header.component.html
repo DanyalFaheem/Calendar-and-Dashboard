@@ -1,0 +1,18 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a routerLink="/" class="navbar-brand">App</a>
+      </div>
+      <ul class="navbar-nav"> 
+        <li *ngIf="Loginservice.UserType === 'Admin'" routerLinkActive="active" class="nav-item active"><a routerLink="/grid" class="nav-link">Grid</a></li>
+        <li *ngIf="Loginservice.UserType === 'Agent'" routerLinkActive="active" class="nav-item active"><a routerLink="/calendar" class="nav-link">Calendar</a></li>
+    </ul>
+        <ul class="navbar-nav mr-auto navbar-right">
+            <li *ngIf="!Loginservice.Authenticate()" routerLinkActive="active" class="nav-item active"><a routerLink="/login" class="nav-link">Login</a></li>
+            <!-- <li routerLinkActive="active" class="nav-item active"><a routerLink="/register" class="nav-link">Register</a></li> -->
+            <li *ngIf="Loginservice.Authenticate()" routerLinkActive="active" class="nav-item active"><a (click)="Loginservice.onLogout()" class="nav-link">Logout</a></li>
+        </ul>
+    </div>
+</nav>  
+
+  

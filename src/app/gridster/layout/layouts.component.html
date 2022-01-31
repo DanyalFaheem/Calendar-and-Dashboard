@@ -1,0 +1,70 @@
+<div class="container-fluid" style="margin-top: 2em;">
+    <div class="row">
+        
+    </div>
+</div>
+<div class="col-3">
+    <h2 class="text-center">PROPERTIES</h2>
+    <hr>
+    <div *ngIf=propertiesClicked>
+      <form ngForm>
+        <label for="Rows" class="form-control">
+          Rows:
+          <br>
+          <input type="number" placeholder="rows" [ngModelOptions]="{standalone: true}" [(ngModel)]="getLayout(currentItem)!.rows" (ngModelChange)="changedOptions()">
+        </label>
+        <br>
+        <label for="Columns" class="form-control">
+          Columns:
+          <br>
+          <input type="number" placeholder="cols" [ngModelOptions]="{standalone: true}" [(ngModel)]="getLayout(currentItem)!.cols" (ngModelChange)="changedOptions()">
+        </label>
+        <div *ngIf="selected==='input'">
+          <label for="Placeholder" class="form-control">
+           Placeholder:
+            <br>
+            <input type="text" id="Placeholder" [ngModelOptions]="{standalone: true}" name="Placeholder" placeholder="placeholder" [(ngModel)]="getLayout(currentItem)!.obj.placeholder">
+          </label>
+          <!-- <label for="Input Type">
+            Input Type:
+            <br>
+            <input type="text" id="Input Type" [ngModelOptions]="{standalone: true}" name="Input Type"  placeholder="Input type" [(ngModel)]="obj.type">
+          </label> -->
+          <div class="form-group options-header">
+            <label for="Input Type" class="form-control">Type:</label>
+            <select class="form-control" [(ngModel)]="getLayout(currentItem)!.obj.type" [ngModelOptions]="{standalone: true}" placeholder="Input type" id="Input Type">
+              <option value="text">Text</option>
+              <option value="number">Number</option>
+              <option value="radio">Radio</option>
+              <option value="email">Email</option>
+            </select>
+            <!-- <mat-form-field>
+              <mat-select aria-label="Grid type" [(ngModel)]="getLayout(currentItem)!.obj.type" [ngModelOptions]="{standalone: true}" placeholder="Input type" id="Input Type">
+                <mat-option value="text">Text</mat-option>
+                <mat-option value="number">Number</mat-option>
+                <mat-option value="radio">Radio</mat-option>
+                <mat-option value="email">Email</mat-option>
+              </mat-select>
+            </mat-form-field> -->
+          </div>
+        </div>
+        <div *ngIf="selected==='checkbox'">
+          <br>
+          <button class="btn btn-info" (click)="addCheckbox()">
+            <strong>+
+            </strong>
+          </button>
+          <br>
+          <label *ngFor="let check of getLayout(currentItem)!.obj.checkboxes; let i = index" for="Input Type">
+            Checkbox {{i + 1}} value:
+            <br>
+            <input type="text" id="Input Type" [ngModelOptions]="{standalone: true}" name="Input Type"  placeholder="value" [(ngModel)]="check.value"> 
+            <button class="btn btn-danger btn-sm" (click)="deleteCheckbox(i)">
+              <strong>X
+              </strong> 
+             </button>
+          </label>
+        </div>
+      </form>
+      </div>
+  </div>

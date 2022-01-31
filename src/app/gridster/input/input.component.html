@@ -1,0 +1,16 @@
+<div class="form-control" style="margin-top: 2em;">
+    <mat-form-field>
+        <mat-label>
+            Input
+        </mat-label>
+        <div *ngIf="item.type!='currency'">
+            <input [(ngModel)]="input" matInput [type]="item.type" [placeholder]="item.placeholder">
+        </div>
+        <div *ngIf="item.type=='currency'">
+            <input [(ngModel)]="input" matInput [type]="'number'" [placeholder]="item.placeholder">
+        </div>
+    </mat-form-field>
+    <p>{{input | pipe:item.type}}</p>
+</div>
+
+
